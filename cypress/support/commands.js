@@ -59,6 +59,7 @@ Cypress.Commands.add('cadastroUsuario', (usuario, email, senha) => {
         "email": email,
         "password": senha,
         "administrador": "true"
-    }
+    },
+    failOnStatusCode: false
 })
 })
