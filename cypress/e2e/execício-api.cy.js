@@ -41,7 +41,7 @@ describe('Testes da Funcionalidade Usuários', () => {
 
     });
  
-   it('Deve editar um usuário previamente cadastrado', () => {
+   it('Deve editar um usuário previamente cadastrado - PUT', () => {
     let usuario =  faker.person.fullName()
     let email = faker.internet.email(usuario)
    
@@ -66,7 +66,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     });
     });
 
-    it.only('Deve deletar um usuário previamente cadastrado', () => {
+    it.only('Deve deletar um usuário previamente cadastrado - DELETE', () => {
         let usuario =  faker.person.fullName()
         let email = faker.internet.email(usuario)
        
