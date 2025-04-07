@@ -9,7 +9,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     cy.request('usuarios').then(response => {
         return contratos.validateAsync(response.body)
     })
-        });
+     });
 
    it('Deve listar usuários cadastrados - GET', () => {
     cy.request({
@@ -30,7 +30,7 @@ describe('Testes da Funcionalidade Usuários', () => {
         expect(response.status).to.equal(201)
         expect(response.body.message).to.equal('Cadastro realizado com sucesso') 
     })
-   })
+    })
 
    it('Deve validar um  email inválido - GET', () => {
     cy.cadastroUsuario('Lucas', 'lucas@qa.com', 'teste123', 'true')
@@ -66,7 +66,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     });
     });
 
-    it.only('Deve deletar um usuário previamente cadastrado - DELETE', () => {
+    it('Deve deletar um usuário previamente cadastrado - DELETE', () => {
         let usuario =  faker.person.fullName()
         let email = faker.internet.email(usuario)
        
