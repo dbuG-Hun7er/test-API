@@ -22,7 +22,7 @@ describe('Testes da Funcionalidade Usuários', () => {
     })
     });
 
-   it('Deve cadastrar um usuário com sucesso 0- POST', () => {
+   it('Deve cadastrar um usuário com sucesso - POST', () => {
     let usuario =  faker.person.fullName()
     let email = faker.internet.email(usuario)
     
@@ -41,8 +41,27 @@ describe('Testes da Funcionalidade Usuários', () => {
 
     });
  
-   it('Deve editar um usuário previamente cadastrado', () => {
-        
+   it.only('Deve editar um usuário previamente cadastrado', () => {
+    let usuario =  faker.person.fullName()
+    let email = faker.internet.email(usuario)
+   
+    cy.cadastroUsuario(token, usuario, email, 'teste', 'true')
+    .then(response => {
+        let id = response.body._id
+        cy.request({
+            method: 'PUT',
+            url: `usuarios/${id}`,
+            body: {
+                nome: usuario,
+                email: email,
+                password: 'teste123'
+            },
+            failOnStatusCode: false
+            
+
+        });
+
+    });
     });
 
     it('Deve deletar um usuário previamente cadastrado', () => {
