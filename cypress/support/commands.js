@@ -50,11 +50,10 @@ Cypress.Commands.add('token', (email, senha) => {
 })
 })
 
-Cypress.Commands.add('cadastroUsuario', (token, usuario, email, senha, adm) => {
+Cypress.Commands.add('cadastroUsuario', (usuario, email, senha, adm) => {
   cy.request({
     method: 'POST',
     url: 'usuarios',
-    headers: {authorization: token},
     body: {
         "nome": usuario,
         "email": email,

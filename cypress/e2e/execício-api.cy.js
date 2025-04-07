@@ -26,14 +26,14 @@ describe('Testes da Funcionalidade Usuários', () => {
     let usuario =  faker.person.fullName()
     let email = faker.internet.email(usuario)
     
-    cy.cadastroUsuario(usuario, email, 'teste').should((response) => {
+    cy.cadastroUsuario(usuario, email, 'teste', 'true').should((response) => {
         expect(response.status).to.equal(201)
         expect(response.body.message).to.equal('Cadastro realizado com sucesso') 
     })
    })
 
    it('Deve validar um  email inválido - GET', () => {
-    cy.cadastroUsuario('Lucas', 'lucas@qa.com', 'teste123')
+    cy.cadastroUsuario('Lucas', 'lucas@qa.com', 'teste123', 'true')
     .should((response) => {
         expect(response.status).to.equal(400)
         expect(response.body.message).to.equal('Este email já está sendo usado')
@@ -41,30 +41,45 @@ describe('Testes da Funcionalidade Usuários', () => {
 
     });
  
-   it.only('Deve editar um usuário previamente cadastrado', () => {
+   it('Deve editar um usuário previamente cadastrado', () => {
     let usuario =  faker.person.fullName()
     let email = faker.internet.email(usuario)
    
-    cy.cadastroUsuario(token, usuario, email, 'teste', 'true')
+    cy.cadastroUsuario(usuario, email, 'teste', 'true')
     .then(response => {
         let id = response.body._id
         cy.request({
             method: 'PUT',
             url: `usuarios/${id}`,
             body: {
-                nome: usuario,
+                nome: usuario + '- Editado',
                 email: email,
-                password: 'teste123'
+                password: 'teste123',
+                administrador: 'true'
             },
-            failOnStatusCode: false
             
-
-        });
+        }).should((response) => {
+            expect(response.status).to.equal(200)
+            expect(response.body.message).to.equal('Registro alterado com sucesso')
+        })
 
     });
     });
 
-    it('Deve deletar um usuário previamente cadastrado', () => {
-        
+    it.only('Deve deletar um usuário previamente cadastrado', () => {
+        let usuario =  faker.person.fullName()
+        let email = faker.internet.email(usuario)
+       
+        cy.cadastroUsuario(usuario, email, 'teste', 'true')
+        .then(response => {
+            let id = response.body._id
+            cy.request({
+                method: 'DELETE',
+                url: `usuarios/${id}`,
+            }).should(response => {
+                expect(response.status).to.equal(200)
+                expect(response.body.message).to.equal('Registro excluído com sucesso')
+            })
     });
 });
+})
