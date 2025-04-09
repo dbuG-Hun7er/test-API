@@ -32,11 +32,11 @@ describe('Testes da Funcionalidade Usuários', () => {
     })
     })
 
-   it('Deve validar um  email inválido - GET', () => {
-    cy.cadastroUsuario('Lucas', 'lucas@qa.com', 'teste123', 'true')
+   it('Deve validar um usuário com email inválido - GET', () => {
+    cy.cadastroUsuario('Lucas', 'lucasqa.com', 'teste123', 'true')
     .should((response) => {
         expect(response.status).to.equal(400)
-        expect(response.body.message).to.equal('Este email já está sendo usado')
+        expect(response.body.email).to.equal('email deve ser um email válido')
     })
 
     });
